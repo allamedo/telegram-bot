@@ -1,0 +1,3 @@
+-Create requirements.txt
+-Create docker-compose.yml and docker-compose-dev.yml
+-Implement telethon handlers for incomming messages to my Telegram Bot
