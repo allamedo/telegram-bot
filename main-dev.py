@@ -1,6 +1,15 @@
-#Google Cloud Function
 import requests
 import config, firestore
+
+telegram_message_json = {"update_id": 171356370, 
+                        "message": {
+                            "message_id": 63051,
+                            "from": {
+                                "id": 10532106, "is_bot": False, "first_name": "Dum User", "username": "dummy", "language_code": "es"},
+                                "chat": {
+                                     "id": 10532102, "first_name": "Dum Chat", "username": "dummy", "type": "private"},
+                                "date": 1641592478, "text": "Portatil i7 con SSD <300€ https://es.wallapop.com/app/search?category_ids=15000&keywords=ssd%20portatil%20i7&latitude=43.3627&longitude=-5.84768&order_by=newest&filters_source=search_box&max_sale_price=300&min_sale_price=20",
+                                "entities": [{"offset": 26, "length": 197, "type": "url"}]}}
 
 class TelegramMessage():
     def __init__(self, telegram_request_message_json):
@@ -20,11 +29,11 @@ class TelegramMessage():
         else:
             return ''
 
-def parse_message(request):
+def parse_message():
 
-    request_json = request.get_json()
-    print(request_json)
-    requests.post("http://punder.free.beeceptor.com/my/api/gcloud-functions",data=request_json)
+    #request_json = request.get_json()
+    request_json = telegram_message_json
+
     if request_json["update_id"] and request_json["message"]["chat"]["id"] and request_json["message"]["text"]:
         message = TelegramMessage(request_json)
 
@@ -48,8 +57,7 @@ def parse_message(request):
         
         print("Telegram Bot parsed message. Update ID: "+str(request_json["update_id"])+" Chat ID: "+str(message.chat_id)+" Message: "+message.text)
 
-        return "Telegram Bot parsed message. Update ID: "+str(request_json["update_id"])
-        
-
 def send_telegram_reply(reply,chat_id):
     requests.post("https://api.telegram.org/bot"+config.TELEGRAM_BOT_TOKEN+"/sendMessage",{'chat_id': chat_id, 'text' : reply})
+
+parse_message()

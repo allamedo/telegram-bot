@@ -1,0 +1,3 @@
+ptvsd #VSCode Debugger
+telethon #Telegram Bot Wrapper
+firebase-admin

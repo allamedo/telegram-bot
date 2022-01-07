@@ -1,3 +1,6 @@
--Create requirements.txt
--Create docker-compose.yml and docker-compose-dev.yml
--Implement telethon handlers for incomming messages to my Telegram Bot
+- [X] Create requirements.txt
+- [X] Create docker-compose-dev.yml
+- [X] Implement telethon handlers for incomming messages to my Telegram Bot
+- [ ] Implement "/list" command to list all searches for the given user
+- [ ] Create README.md
+- [ ] Inline selection on Telegram chat for the searches list so the user can remove them with a click

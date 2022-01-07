@@ -1,0 +1,17 @@
+version: '3.7'
+ #docker stack deploy -c docker-compose-dev.yml telegram-bot-dev --with-registry-auth
+
+services:
+    python:
+        image: punder/priv-repo:cashconverters
+        build:
+            context: .
+        command: tail -F anything #python -u -m ptvsd --host 0.0.0.0 --port 5678 --wait main-dev.py
+        ports:
+            - 5678:5678
+        volumes:
+            - ./:/app
+        deploy:
+            placement:
+                constraints:
+                    - "node.hostname==docker3-ubuntu"
