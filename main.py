@@ -49,7 +49,6 @@ def parse_message(request):
         print("Telegram Bot parsed message. Update ID: "+str(request_json["update_id"])+" Chat ID: "+str(message.chat_id)+" Message: "+message.text)
 
         return "Telegram Bot parsed message. Update ID: "+str(request_json["update_id"])
-        
 
 def send_telegram_reply(reply,chat_id):
     requests.post("https://api.telegram.org/bot"+config.TELEGRAM_BOT_TOKEN+"/sendMessage",{'chat_id': chat_id, 'text' : reply})
