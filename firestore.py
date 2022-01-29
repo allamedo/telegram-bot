@@ -25,11 +25,20 @@ def url_delete(url) -> str:
         search.reference.delete()
         return name
     return ''
-    
+
+def list_searches(telegram_chat_id) -> dict:
+    urls = {}
+    for search in searches_collection.where(u'telegram_chat_id', u'==', telegram_chat_id).stream():
+        urls[search.to_dict()["url"]] = search.to_dict()["name"]
+    return urls
 
 if __name__ == "__main__": #Unit test
     #print(url_exists("https://es.wallapop.com/search?time_filter=lastWeek&keywords=thinkcentre%20ssd&max_sale_price=100&latitude=40.41956&longitude=-3.69196&filters_source=quick_filters"))
 
     #url_insert("test","test2",33)
 
-    url_delete("test")
+    #url_delete("test")
+
+    searches = list_searches(-353268130)
+    for url in searches:
+        print(searches[url]+" "+url)

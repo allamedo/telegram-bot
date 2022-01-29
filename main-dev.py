@@ -16,6 +16,4 @@ class Request:
     def get_json(self):
         return self.telegram_message_json
 
-#main.parse_message(Request())
-
-print( main.TelegramMessage(Request().get_json()).username() )
+main.parse_message(Request())
