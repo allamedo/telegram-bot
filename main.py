@@ -3,12 +3,12 @@ import requests
 import config, firestore
 
 class TelegramMessage():
-    def __init__(self, telegram_request_message_json):
+    def __init__(self, message_json):
+        self.raw_message = message_json
         try:
-            self.update_id = telegram_request_message_json["update_id"]
-            self.text = telegram_request_message_json["message"]["text"]
-            self.chat_id = telegram_request_message_json["message"]["chat"]["id"]
-            self.username = telegram_request_message_json["message"]["from"]["username"]
+            self.update_id = self.raw_message["update_id"]
+            self.text = self.raw_message["message"]["text"]
+            self.chat_id = self.raw_message["message"]["chat"]["id"]
             self.valid = True
         except:
             self.valid = False
@@ -30,6 +30,11 @@ class TelegramMessage():
             return 'zalando'
         else:
             return ''
+    def username(self) -> str:
+        try:
+            return self.raw_message["message"]["from"]["username"]
+        except:
+            return ""
 
 def parse_message(request):
 
@@ -42,12 +47,12 @@ def parse_message(request):
 
             if firestore.url_exists(message.url()):
                 deleted_name = firestore.url_delete(message.url())
-                print("Deleted Search URL: "+message.url()+" Chat ID: "+str(message.chat_id)+" Name: "+message.name()+ " Username: "+message.username)
+                print("Deleted Search URL: "+message.url()+" Chat ID: "+str(message.chat_id)+" Name: "+message.name()+ " Username: "+message.username())
                 send_telegram_reply("He borrado tu búsqueda: "+deleted_name, message.chat_id)
 
             else:
-                firestore.url_insert(message.url(),message.name(),message.chat_id,message.store(), message.username)
-                print("Inserted Search URL: "+message.url()+" Chat ID: "+str(message.chat_id)+" Name: "+message.name()+ " Username: "+message.username)
+                firestore.url_insert(message.url(),message.name(),message.chat_id,message.store(), message.username())
+                print("Inserted Search URL: "+message.url()+" Chat ID: "+str(message.chat_id)+" Name: "+message.name()+ " Username: "+message.username())
                 send_telegram_reply("He creado tu búsqueda: "+message.name(), message.chat_id)
 
         elif len(message.store()) == 0 and len(message.url()) > 0:
