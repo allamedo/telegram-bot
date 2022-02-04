@@ -1,4 +1,5 @@
 #Google Cloud Function
+from pickle import FALSE
 import requests
 import config, firestore
 
@@ -28,6 +29,8 @@ class TelegramMessage():
             return 'wallapop'
         elif 'zalando.' in self.url()[:30]:
             return 'zalando'
+        elif 'glovo.' in self.url()[:30]:
+            return 'glovo'
         else:
             return ''
     def username(self) -> str:
@@ -65,7 +68,7 @@ def parse_message(request):
         elif len(message.url()) > 0 and not len(message.store()) > 0:
             send_telegram_reply("No reconozco la tienda que me has enviado. Puede que aún no la haya implementado...", message.chat_id)
         
-        #User requested list of saved searches
+        #Requested list of saved searches
         elif message.listRequested:
             searches = firestore.list_searches(message.chat_id)
             for url in searches:
