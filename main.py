@@ -29,7 +29,7 @@ class TelegramMessage():
             return 'wallapop'
         elif 'zalando.' in self.url()[:30]:
             return 'zalando'
-        elif 'glovo.' in self.url()[:30]:
+        elif 'glovoapp.' in self.url()[:30]:
             return 'glovo'
         else:
             return ''
