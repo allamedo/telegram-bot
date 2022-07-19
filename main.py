@@ -33,6 +33,8 @@ class TelegramMessage():
             return 'glovo'
         elif 'sprintersports.' in self.url()[:30]:
             return 'sprinter'
+        elif 'vinted.' in self.url()[:30]:
+            return 'vinted'
         else:
             return ''
     def username(self) -> str:
