@@ -35,6 +35,8 @@ class TelegramMessage():
             return 'sprinter'
         elif 'vinted.' in self.url()[:30]:
             return 'vinted'
+        elif 'ebay.es' in self.url()[:30]:
+            return 'ebay'
         else:
             return ''
     def username(self) -> str:
